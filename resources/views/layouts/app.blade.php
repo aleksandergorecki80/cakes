@@ -22,12 +22,12 @@
 <body>
     @include("inc.navbar")
     <div class="container">
-        {{-- @include('inc.messages') --}}
+        @include('inc.messages')
         @yield('content')
     </div>
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script>
-        CKEDITOR.replace( 'article-ckeditor' );
+        CKEDITOR.replace( 'summary-ckeditor' );
     </script>
 </body>
 </html>

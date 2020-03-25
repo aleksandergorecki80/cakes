@@ -8,8 +8,9 @@ class PagesController extends Controller
 {
     //
     public function index(){
-        $title = 'Welcome to my page';
-        return view('pages.index')->with('title', $title);
+        // $title = 'Welcome to my page';
+        // return view('pages.index')->with('title', $title);
+        return redirect('/posts');
     }
 
     public function about(){
