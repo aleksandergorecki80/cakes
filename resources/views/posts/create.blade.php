@@ -7,9 +7,11 @@
             {{ Form::label('title', 'Title') }}
             {{ Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title']) }}
         </div>
-        <div class='form-group'>
+        <div>
             {{ Form::label('body', 'Body') }}
-            {{ Form::textarea('body', '', ['id' => 'summary-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body text']) }}
+            {{-- {{ Form::textarea('body', '', ['id' => 'article-ckeditor', 'placeholder' => 'Body text']) }} --}}
+            {{ Form::textarea('body', '', ['class'=>'form-control my-editor', 'id' => '', 'placeholder' => 'Body text']) }}
+            
         </div>
         <div>
             {{ Form::file('cover_image') }}
