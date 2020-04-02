@@ -17,7 +17,16 @@
                             <a href="/posts/{{ $post->id }}/">
                                 <h3 class="text-center">{{ $post->title }}</h3>
                             </a>
-                                <p>{!! $post->body !!}</p>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>{!! $post->summary !!}</p>
+                                </div>
+                                <div class="col-md-5 button-cell">
+                                    <a href="/posts/{{ $post->id }}/">
+                                        <input type="button" value="Zobacz" class="button-see-more">
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                     {{ $posts->links() }}

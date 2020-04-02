@@ -10899,7 +10899,6 @@ a.text-dark:focus {
 
 * {
   box-sizing: border-box;
-  border: 1px solid red;
 }
 
 .navbar {
@@ -11008,18 +11007,48 @@ a.text-dark:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-.image {
+.post .image {
   overflow: hidden;
 }
 
-.image img {
-  width: 500px;
+.post .image img {
+  width: 550px;
   transition: all 0.3s;
 }
 
-.image img:hover {
+.post .image img:hover {
   transform: scale(1.1);
+}
+
+.post a {
+  text-decoration: none;
+}
+
+.post p {
+  text-align: justify;
+  font-size: larger;
+}
+
+.post h3 {
+  color: #079100;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.post .button-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post .button-see-more {
+  color: #FCB245;
+  border: 2px solid #FCB245;
+  background-color: white;
+  padding: 10px 60px;
 }
 
