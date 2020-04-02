@@ -1,25 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="posts">
-        <div class="row">
-        @if(count($posts)>0)
-        @foreach ($posts as $post)
-        <a href="/posts/{{ $post->id }}">
-            <div class="col-md-6 col-sm-12 post">
-                <div class="image">
-                    <img src="/storage/cover_images/{{ $post->cover_image }}" alt="">
-                </div>
-                <div class="">
-                    <h3 class="text-center">{{ $post->title }}</h3>
-                </div>
+    @include('inc.carousel')
+    <main class="container">
+        <div class="posts">
+            <div class="row">
+                @if(count($posts)>0)
+                    @foreach ($posts as $post)
+                    
+                        <div class="col-md-6 post">
+                            <div class="image">
+                                <a href="/posts/{{ $post->id }}/">
+                                    <img src="/storage/cover_images/{{ $post->cover_image }}" alt="">
+                                </a>
+                            </div>
+                            <a href="/posts/{{ $post->id }}/">
+                                <h3 class="text-center">{{ $post->title }}</h3>
+                            </a>
+                                <p>{!! $post->body !!}</p>
+                        </div>
+                    @endforeach
+                    {{ $posts->links() }}
+                @else
+                    <p>No post found</p>
+                @endif
             </div>
-        </a>
-        @endforeach
-        {{ $posts->links() }}
-    @else
-        <p>No post found</p>
-    @endif
-    </div>
-    </div>
+        </div>
+    </main>
 @endsection
