@@ -15,6 +15,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Lato", sans-serif;
+  src: url("/storage/fonts/Lato-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -49,7 +56,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Nunito", sans-serif;
+  --font-family-sans-serif: "Lato", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -81,7 +88,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -6391,7 +6398,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -6516,7 +6523,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Nunito", sans-serif;
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -10901,6 +10908,10 @@ a.text-dark:focus {
   box-sizing: border-box;
 }
 
+body {
+  font-style: "Lato", sans-serif;
+}
+
 .navbar {
   justify-content: center !important;
 }
@@ -10992,6 +11003,7 @@ a.text-dark:focus {
   background-color: rgba(0, 150, 0, 0.6);
   color: white;
   padding: 10px 30px;
+  transition: all 0.3s;
 }
 
 .my-slides .my-button:hover,
@@ -11050,5 +11062,33 @@ a.text-dark:focus {
   border: 2px solid #FCB245;
   background-color: white;
   padding: 10px 60px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.post .button-see-more:hover {
+  color: white;
+  background-color: #FCB245;
+}
+
+.single-post h1 {
+  color: #079100;
+  font-weight: bold;
+}
+
+.single-post .post-img {
+  float: right;
+  margin-left: 40px;
+}
+
+.dashboard-table table {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.dashboard-table tr,
+.dashboard-table td {
+  border: 1px solid black;
+  text-align: center;
 }
 

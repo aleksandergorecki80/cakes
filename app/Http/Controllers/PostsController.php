@@ -58,6 +58,7 @@ class PostsController extends Controller
         // Validation
         $this->validate($request, [
             'title' => 'required',
+            'summary' => 'required|max:191',
             'body' => 'required',
             'cover_image' => 'image|nullable|max:1999'
         ]);
@@ -80,11 +81,12 @@ class PostsController extends Controller
         // create post
         $post = new Post();
         $post->title = $request->input('title');
+        $post->summary = $request->input('summary');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
         $post->cover_image = $fileNameToStore;
         $post->save();
-        return redirect('/posts')->with('success', 'Post created');
+        return redirect('/home')->with('success', 'Post created');
     }
 
     /**
@@ -126,15 +128,17 @@ class PostsController extends Controller
         // Validation
         $this->validate($request, [
             'title' => 'required',
+            'summary' => 'required|max:191',
             'body' => 'required'
         ]);
 
         // create post
         $post = Post::find($id);
         $post->title = $request->input('title');
+        $post->summary = $request->input('summary');
         $post->body = $request->input('body');
         $post->save();
-        return redirect('/posts')->with('success', 'Post updated');
+        return redirect('/home')->with('success', 'Post updated');
 
     }
 
@@ -149,6 +153,6 @@ class PostsController extends Controller
         // Delete post
         $post = Post::find($id);
         $post->delete();
-        return redirect('/posts')->with('success', 'Post deleted');
+        return redirect('/home')->with('success', 'Post deleted');
     }
 }

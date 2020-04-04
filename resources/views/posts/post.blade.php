@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>
-        <a href="/posts">Go Back</a>
-        <h3>{{ $post->title }}</h3>
-        <p>
+    <div class="container single-post">
+        <h1>{{ $post->title }}</h1>
+        <img src="/storage/cover_images/{{ $post->cover_image }}" alt="{{ $post->title }}" class="post-img">
+        <div class="post-body-paragraph">
             {!! $post->body !!}
-        </p>
+        </div>
         <hr>
         <small>{{ $post->created_at }}</small>
         <hr>

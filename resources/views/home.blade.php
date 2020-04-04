@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="container">
@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -15,20 +14,23 @@
                     @endif
 
                     You are logged in!
-                    <div>
+                    <div class="dashboard-table">
                         <h3>Your posts.</h3>
                         @if(count($posts)>0)
-                            <ul>
+                        <table>
                                 @foreach ($posts as $post)
-                                    <li>
-                                        {{ $post->title }} <a href="/posts/{{ $post->id }}/edit">Edit post</a>
-                                        {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => '']) !!}
-                                            {{ Form::hidden('_method', 'DELETE') }}
-                                            {{ Form::submit('Delete', ['class'=>'btn']) }}
-                                        {!! Form::close() !!}
-                                    </li>
+                                    <tr>
+                                        <td>{{ $post->title }} </td>                                    
+                                        <td><a href="/posts/{{ $post->id }}/edit">Edit post</a></td>
+                                        <td>
+                                            {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => '']) !!}
+                                                {{ Form::hidden('_method', 'DELETE') }}
+                                                {{ Form::submit('Delete', ['class'=>'btn btn-danger']) }}
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </ul>
+                            </table>
                             @else
                                 <p>You have no posts.</p>
                         @endif
