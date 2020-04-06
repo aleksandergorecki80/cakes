@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 
 class PostsController extends Controller
 {
@@ -32,8 +33,15 @@ class PostsController extends Controller
         // $posts = Post::orderBy('title', 'desc')->take(1)->get();
         // $posts = Post::orderBy('title', 'desc')->get();
 
+        $categories = Category::all();
+
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('posts.index')->with('posts', $posts);
+
+        $data = [
+            'categories' => $categories,
+            'posts' => $posts,
+        ];
+        return view('posts.index')->with($data);
     }
 
     /**

@@ -1,6 +1,6 @@
-@if(count($posts)>0)
-    @foreach ($posts as $post)
-        {{ $post->title }}    
+@if(count($categories)>0)
+    @foreach ($categories as $category)
+        {{ $category->title }}    
     @endforeach
 @endif
 

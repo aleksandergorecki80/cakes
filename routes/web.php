@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ Route::get('/contact', 'PagesController@contact');
 // });
 
 Route::resource('posts', 'PostsController');
+Route::resource('category', 'CategoryController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
