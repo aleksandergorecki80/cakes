@@ -18,6 +18,10 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
+// Rout for search form
+Route::get('/search', 'PagesController@search');
+
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });

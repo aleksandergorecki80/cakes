@@ -16,7 +16,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show', 'search']]);
     }
 
     /**
@@ -107,7 +107,12 @@ class PostsController extends Controller
     {
         // Show a single post
         $post = Post::find($id);
-        return view('posts.post')->with('post', $post);
+        $categories = Category::all();
+        $data = [
+            'categories' => $categories,
+            'post' => $post
+        ];
+        return view('posts.post')->with($data);
     }
 
     /**

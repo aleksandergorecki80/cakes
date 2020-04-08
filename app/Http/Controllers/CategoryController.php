@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,7 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['show']]);
     }
 
 
@@ -58,7 +60,21 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        // Show posts from selected category
+        // $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
+
+        $posts = Category::find($id)->posts;
+        
+        // $posts = Category::find($id)->paginate(10)->posts;
+        $categories = Category::all();
+        $data = [
+            'categories' => $categories,
+            'posts' => $posts
+        ];
+        // return $posts;
+        return view('category.index')->with($data);
+
     }
 
     /**
