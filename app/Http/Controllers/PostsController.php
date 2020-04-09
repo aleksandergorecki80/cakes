@@ -51,8 +51,11 @@ class PostsController extends Controller
      */
     public function create()
     {
+        // Get categories list
+        $categories = Category::all();
         // Create a new post
-        return view('posts.create');
+        // return view('posts.create')->with('categories', $categories);
+        return view('posts.create')->with('categories', $categories);
     }
 
     /**
@@ -93,7 +96,10 @@ class PostsController extends Controller
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
         $post->cover_image = $fileNameToStore;
+        $post->category_id = $request->input('category_id');
         $post->save();
+
+        // return $request->input('cars');
         return redirect('/home')->with('success', 'Post created');
     }
 
@@ -124,8 +130,15 @@ class PostsController extends Controller
     public function edit($id)
     {
         // Edit post
+
+
+        $categories = Category::all();
         $post = Post::find($id);
-        return view('posts.edit')->with('post', $post);
+        $data = [
+            'categories' => $categories,
+            'post' => $post
+        ];
+        return view('posts.edit')->with($data);
     }
 
     /**
@@ -150,6 +163,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->summary = $request->input('summary');
         $post->body = $request->input('body');
+        $post->category_id = $request->input('category_id');
         $post->save();
         return redirect('/home')->with('success', 'Post updated');
 

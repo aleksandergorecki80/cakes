@@ -5,6 +5,18 @@
     <h1>Edit post</h1>
     {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST']) !!}
         <div class='form-group'>
+            {{ Form::label('category', 'Category') }}
+                <select name="category_id">
+                    @foreach ($categories as $category)
+                        @if ($post->category_id == $category->id)
+                                <option value={{ $category->id }} selected>{{ $category->title }}</option>
+                            @else
+                                <option value={{ $category->id }}>{{ $category->title }}</option>
+                            @endif
+                        @endforeach
+                </select>
+        </div>
+        <div class='form-group'>
             {{ Form::label('title', 'Title') }}
             {{ Form::text('title', $post->title, ['class' => 'form-control', 'placeholder' => 'Title']) }}
         </div>

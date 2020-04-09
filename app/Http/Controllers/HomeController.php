@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -26,6 +27,11 @@ class HomeController extends Controller
     {
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        return view('home')->with('posts', $user->posts);
+        $categories = Category::all();
+        $data = [
+            'categories' => $categories,
+            'posts' => $user->posts
+        ];
+        return view('home')->with($data);
     }
 }

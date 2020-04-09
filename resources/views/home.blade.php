@@ -20,7 +20,13 @@
                         <table>
                                 @foreach ($posts as $post)
                                     <tr>
-                                        <td>{{ $post->title }} </td>                                    
+                                        <td>{{ $post->title }} </td>    
+                                        @foreach ($categories as $category)
+                                            @if($post->category_id == $category->id)
+                                                <td>{{ $category->title }} </td> 
+                                            @endif
+                                        @endforeach                                
+                                                                           
                                         <td><a href="/posts/{{ $post->id }}/edit">Edit post</a></td>
                                         <td>
                                             {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => '']) !!}
