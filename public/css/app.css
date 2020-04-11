@@ -10909,7 +10909,7 @@ a.text-dark:focus {
 }
 
 body {
-  font-style: "Lato", sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .navbar {
@@ -11027,7 +11027,7 @@ body {
 }
 
 .post .image img {
-  width: 550px;
+  width: 100%;
   transition: all 0.3s;
 }
 
@@ -11058,6 +11058,7 @@ body {
 }
 
 .post .button-see-more {
+  display: block;
   color: #FCB245;
   border: 2px solid #FCB245;
   background-color: white;

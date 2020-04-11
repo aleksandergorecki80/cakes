@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Edit post</h1>
-    {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class='form-group'>
             {{ Form::label('category', 'Category') }}
                 <select name="category_id">
@@ -30,7 +30,7 @@
             {{-- {{ Form::textarea('body', $post->body, ['id' => 'summary-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body text']) }} --}}
             {{ Form::textarea('body', $post->body, ['class'=>'form-control my-editor', 'id' => '']) }}
         </div>
-        <div>
+        <div class="form-group">
             {{ Form::file('cover_image') }}
         </div>
         <div>

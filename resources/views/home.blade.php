@@ -5,7 +5,23 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">
+
+                    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+                        <ul class="navbar-nav">
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Link 1</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/category">Categories</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Link 3</a>
+                          </li>
+                        </ul>
+                      </nav>
+
+                </div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">

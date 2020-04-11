@@ -18,7 +18,7 @@
   @if(count($categories)>0)
     @foreach ($categories as $category)
       <div class="carousel-item">
-        <img src="/storage/slides_images/{{ $category->slider_image }}" class="d-block w-100 slide-img" alt="...">
+        <img src="/storage/slider_images/{{ $category->slider_image }}" class="d-block w-100 slide-img" alt="...">
         <div class="container slide-description">
           <div class="row">
             <div class="col-md-8">

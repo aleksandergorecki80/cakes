@@ -27,8 +27,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-        return 'kki';
+        $categories = Category::all();
+
+        return view('category.index')->with('categories', $categories);
     }
 
     /**
@@ -38,7 +39,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        // Open a form for create a new category
+        return view('category.create');
+
     }
 
     /**
@@ -49,7 +52,38 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                // Validation
+                $this->validate($request, [
+                    'title' => 'required',
+                    'body' => 'required',
+                    'slider_image' => 'image|nullable|max:1999'
+                ]);
+        
+                // Handle File Upload
+                if($request->hasFile('slider_image')){
+                    $filenameWithExt = $request->file('slider_image')->getClientOriginalName();
+                    //Get just filemame
+                    $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                    //Get just ext
+                    $extension = $request->file('slider_image')->getClientOriginalExtension();
+                    $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        
+                    // Upload Image
+                    $path = $request->file('slider_image')->storeAs('public/slider_images', $fileNameToStore);
+                } else {
+                     $fileNameToStore = 'noimage.jpg';
+                }
+        
+                // create category
+                $category = new Category();
+                $category->title = $request->input('title');
+                $category->body = $request->input('body');
+                // $category->user_id = auth()->user()->id;
+                $category->slider_image = $fileNameToStore;
+                $category->save();
+        
+                // return $request->input('cars');
+                return redirect('/category')->with('success', 'Category created');
     }
 
     /**
@@ -73,7 +107,7 @@ class CategoryController extends Controller
             'posts' => $posts
         ];
         // return $posts;
-        return view('category.index')->with($data);
+        return view('pages.find')->with($data);
 
     }
 
@@ -86,6 +120,11 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
+        // Edit category
+
+        $category = Category::find($id);
+
+        return view('category.edit')->with('category', $category);
     }
 
     /**
@@ -97,7 +136,37 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        // Update category
+        // Validation
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'slider_image' => 'image|nullable|max:1999'
+        ]);
+
+        // Handle File Upload
+        if($request->hasFile('slider_image')){
+            $filenameWithExt = $request->file('slider_image')->getClientOriginalName();
+            //Get just filemame
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get just ext
+            $extension = $request->file('slider_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+
+            // Upload Image
+            $path = $request->file('slider_image')->storeAs('public/slider_images', $fileNameToStore);
+        } else {
+                $fileNameToStore = $category->slider_image;
+        }
+
+        // update post
+        $category->title = $request->input('title');
+        $category->body = $request->input('body');
+        $category->slider_image = $fileNameToStore;
+        $category->save();
+        
+        return redirect('/category')->with('success', 'Category updated');
     }
 
     /**
@@ -108,6 +177,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Delete category
+        $category = Category::find($id);
+        $category->delete();
+        return redirect('/category')->with('success', 'Category deleted');
     }
 }

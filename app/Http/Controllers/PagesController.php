@@ -56,7 +56,7 @@ class PagesController extends Controller
             'categories' => $categories,
             'posts' => $posts
         ];
-        return view('category.index')->with($data);
+        return view('pages.find')->with($data);
     }
 
 }
