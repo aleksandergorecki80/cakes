@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// page routes
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
@@ -21,6 +22,9 @@ Route::get('/contact', 'PagesController@contact');
 // Rout for search form
 Route::get('/search', 'PagesController@search');
 
+// Mail route
+// Route::get('/send-mail', function () {
+Route::get('/send-mail', 'PagesController@sendEmail');
 
 // Route::get('/', function () {
 //     return view('welcome');
