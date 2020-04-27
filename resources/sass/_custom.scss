@@ -10,7 +10,10 @@ body {
 }
 
 
-
+html {
+    position: relative;
+    min-height: 100%;
+}
 
  //     NAVBAR
 
@@ -133,6 +136,10 @@ body {
 
 //  POSTS SECTION
 
+.posts {
+    margin-bottom: 100px;
+}
+
 .post {
     display: flex;
     flex-direction: column;
@@ -198,5 +205,24 @@ body {
     .post-img {
         float: right;
         margin-left: 40px;
+    }
+}
+
+// Footer
+.my-footer {
+    color: white;
+    background-color: $orange;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    div {
+        padding: 20px;
+    }
+    a {
+        color: white;
     }
 }

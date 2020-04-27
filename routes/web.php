@@ -14,8 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+// Running with Vue
+Route::get('/{any?}', function () {
+    return view('vue');
+})->where('any', '^(?!api\/)[\/\w\.-]*');
+
+
 // page routes
-Route::get('/', 'PagesController@index');
+// Running with blade 
+// Route::get('/', 'PagesController@index');
+
+
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 

@@ -27,6 +27,7 @@
         
         @yield('content')
         
+        @include('inc.footer')
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/main.js') }}" defer></script>
