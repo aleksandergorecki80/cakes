@@ -14,11 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', 'PagesController@index');
 
 // Running with Vue
-Route::get('/{any?}', function () {
-    return view('vue');
-})->where('any', '^(?!api\/)[\/\w\.-]*');
+// Route::get('/{any?}', function () {
+//     return view('vue');
+// })->where('any', '^(?!api\/)[\/\w\.-]*');
 
 
 // page routes

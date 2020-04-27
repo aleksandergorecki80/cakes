@@ -17,7 +17,7 @@
 <script>
 export default {
     mounted() {
-        console.log('baz');
+        console.log('footer');
     },
 }
 </script>

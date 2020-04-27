@@ -18,6 +18,7 @@
     </head>
     <body>
         <div id="app">
+            <my-nav></my-nav>
             <index></index>
             <my-footer></my-footer>
         </div>
