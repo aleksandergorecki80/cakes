@@ -1,18 +1,20 @@
 import VueRouter from 'vue-router';
-import ExampleComponent from './components/ExampleComponent';
-import Kki from './components/kki';
+import Posts from './posts/Posts';
+import Post from './post/SinglePost';
+
 
 const routes = [
     {
         path: "/",
-        component: ExampleComponent,
+        component: Posts,
         name: "home"
     },
     {
-        path: "/kki",
-        component: Kki,
-        name: "kki"
-    },
+        path: "/post/:id",
+        component: Post,
+        name: "post"
+    }
+    
 ];
 
 const router = new VueRouter({

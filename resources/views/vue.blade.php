@@ -18,9 +18,11 @@
     </head>
     <body>
         <div id="app">
-            <my-nav></my-nav>
-            <index></index>
-            <my-footer></my-footer>
+            <div class="container mt-4 mb-4 pr-4 pl-3">
+                <my-nav></my-nav>
+                <index></index>
+                <my-footer></my-footer>
+            </div>
         </div>
     </body>
 </html>

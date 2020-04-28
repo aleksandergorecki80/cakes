@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', 'PagesController@index');
 
 // Running with Vue
-// Route::get('/{any?}', function () {
-//     return view('vue');
-// })->where('any', '^(?!api\/)[\/\w\.-]*');
+Route::get('/{any?}', function () {
+    return view('vue');
+})->where('any', '^(?!api\/)[\/\w\.-]*');
 
 
 // page routes
@@ -34,12 +33,9 @@ Route::get('/contact', 'PagesController@contact');
 Route::get('/search', 'PagesController@search');
 
 // Mail route
-// Route::get('/send-mail', function () {
+
 Route::get('/send-mail', 'PagesController@sendEmail');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::resource('posts', 'PostsController');
 Route::resource('category', 'CategoryController');
