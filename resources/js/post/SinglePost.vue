@@ -13,6 +13,7 @@
                     </div>
                 </div>
             </div>
+                    <ReviewList v-bind:post-id="this.$route.params.id | turnIntoString"></ReviewList>
         </div>
         <div class="col-md-4 pb-4">
             prawa strona
@@ -21,10 +22,11 @@
 </template>
 
 <script>
-    
+    import ReviewList from './ReviewList';
 export default {
+    
     components: {
-        
+        ReviewList
     },
     data(){
         return {
@@ -37,9 +39,14 @@ export default {
         console.log(this.$route.params.id);
         const request = axios.get(`/api/posts/${this.$route.params.id}`)
         .then(response => {
-            this.post = response.data;
+            this.post = response.data.data;
             this.loading = false;
             });
+    },
+    filters: {
+        turnIntoString(value){
+            return (typeof myVar === 'string') ? value : value.toString();
+        }
     }
 }
 </script>

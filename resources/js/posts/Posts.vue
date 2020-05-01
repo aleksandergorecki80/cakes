@@ -5,11 +5,9 @@
         </div>
         <div v-else>
             <div class="row mb-4" v-for="row in rows" :key="'row' + row"> 
-                <div class="col d-flex align-items-stretch" v-for="(posts, column) in postsInRow(row)" :key="'row' + row + column">
+                <div class="col d-flex align-items-stretch" v-for="(post, column) in postsInRow(row)" :key="'row' + row + column">
                     <PostListItem 
-                        v-bind:title="posts.title" 
-                        v-bind:description="posts.summary" 
-                        v-bind:id="posts.id" 
+                        v-bind="post"
                     ></PostListItem> 
                 </div>
                 <div class="col" v-for="p in placeholderInRow(row)" :key="'placeholder' + row + p"></div>
@@ -68,7 +66,7 @@ export default {
         const request = axios
         .get("/api/posts")
         .then(response => {
-            this.posts = response.data;
+            this.posts = response.data.data;
             this.loading = false;
             });
 

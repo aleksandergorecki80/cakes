@@ -1,6 +1,5 @@
 <?php
 
-use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('posts', function(Request $request){
-    return Post::all();
-});
+// Route::get('posts', 'Api\PostController@index');
+// Route::get('posts/{id}', 'Api\PostController@show');
 
-Route::get('posts/{id}', function(Request $request, $id){
-    return Post::findOrFail($id);
-});
+Route::apiResource('posts', 'Api\PostController')->only(['index', 'show']);
+
+// search field - works but dont display, I dont know how to do it
+Route::get('search', 'Api\ShowSearchedPosts')->name('posts.search.show');
+
+// pobiera kategorie do menu
+Route::get('loadmenu', 'Api\ShowMenu')->name('mainmenu.show');
+
+// pobiera liste komentazy
+Route::get('posts/{post}/reviews', 'Api\PostReviewController')->name('posts.reviews.show');

@@ -4,7 +4,7 @@
             <router-link v-bind:to="{ name: 'post', params: {id: id}}">
                 <h5 class="card-title">{{ title }}</h5>
             </router-link>
-                <p class="card-text">{{ description }}</p>
+                <p class="card-text">{{ summary }}</p>
          </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 export default {
     props: {
         title: String,
-        description: String,
+        summary: String,
         id: Number
     }
 };
