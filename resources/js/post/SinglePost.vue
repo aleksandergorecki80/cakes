@@ -14,6 +14,7 @@
                 </div>
             </div>
                     <ReviewList v-bind:post-id="this.$route.params.id | turnIntoString"></ReviewList>
+                    <Review></Review>
         </div>
         <div class="col-md-4 pb-4">
             prawa strona
@@ -23,9 +24,11 @@
 
 <script>
     import ReviewList from './ReviewList';
+    import Review from './../review/Review';
 export default {
     
     components: {
+        Review,
         ReviewList
     },
     data(){

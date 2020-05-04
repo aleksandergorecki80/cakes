@@ -26,4 +26,8 @@ class Post extends Model
         return $this->hasMany(Review::class);
     }
 
+    public static function findPostByReviewKey($reviewId)
+    {
+        // return static::where()
+    }
 }

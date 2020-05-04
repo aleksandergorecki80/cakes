@@ -31,3 +31,6 @@ Route::get('loadmenu', 'Api\ShowMenu')->name('mainmenu.show');
 
 // pobiera liste komentazy
 Route::get('posts/{post}/reviews', 'Api\PostReviewController')->name('posts.reviews.show');
+
+// api responsible for reviews
+Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);

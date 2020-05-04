@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // Running with Vue
 Route::get('/{any?}', function () {
     return view('vue');
-})->where('any', '^(?!api\/)[\/\w\.-]*');
+})->where('any', '^(?!api\/|login|home|category|posts)[\/\w\.-]*');
 
 
 // page routes

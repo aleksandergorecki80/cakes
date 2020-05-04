@@ -5,12 +5,12 @@
         <div v-if="loading">
             Data is loading...
         </div>
-            <div v-else>
+        <div v-else>
             <div class="border-bottom" v-for="(review, index) in reviews" :key="index">
                 <div class="row pt-4">
                     <div class="col-md-6">Imie i nazwisko</div>
                     <div class="col-md-6 d-flex justify-content-end">
-                        <StarRating v-bind:rating="review.rating"></StarRating>
+                        <StarRating v-bind:value="review.rating"></StarRating>
                     </div>
                 </div>
                 <div class="row">
