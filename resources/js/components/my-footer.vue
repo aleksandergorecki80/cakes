@@ -10,7 +10,6 @@
             <a href="http://aleksandergorecki.com/" target="_blank">aleksandergorecki.com</a>
         </div>
         <!-- Copyright -->
-    
     </footer>
     <!-- Footer -->
 </template>

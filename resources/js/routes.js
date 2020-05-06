@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import Posts from './posts/Posts';
 import Post from './post/SinglePost';
+import Searched from'./posts/Searched';
 import Review from './review/Review';
 
 
@@ -9,6 +10,11 @@ const routes = [
         path: "/",
         component: Posts,
         name: "home"
+    },
+    {
+        path: "/search",
+        component: Searched,
+        name: "search"
     },
     {
         path: "/post/:id",

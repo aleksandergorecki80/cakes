@@ -25,13 +25,7 @@
                 <a class="nav-link" href="/contact">Kontakt</a>
             </li>
             </ul>
-            
-            <div class="search">
-                <input class="search-input" type="search" placeholder="Search" aria-label="Search" name="search" v-model="search">
-                <button class="search-button" type="submit"><i class="fas fa-search"></i></button>
-                <!-- <button class="search-button" type="submit"><img src="/storage/layout_images/search.svg" alt="Search" class="search-button-img" v-on:click="check"></button> -->
-            </div>
-            
+                <Search></Search>      
         </div>
         </nav>
 
@@ -39,7 +33,12 @@
 </template>
 
 <script>
+import Search from './Search';
+
 export default {
+    components: {
+        Search,
+    },
     data(){
         return {
             search: null,
@@ -47,11 +46,13 @@ export default {
             loading: false
         }
     },
-    methods: {
-        check(){
-            alert('I will search for it');
-        }
-    },
+    // methods: {
+    //     check(){
+    //         // alert('I will search for it');
+    //                 // console.log(this.$store);
+    //         this.$store.commit('setLastSearch', {searchName: this.search});
+    //     }
+    // },
     created(){
         this.loading = true;
         const request = axios
