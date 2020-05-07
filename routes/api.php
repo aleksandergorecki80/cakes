@@ -34,3 +34,6 @@ Route::get('posts/{post}/reviews', 'Api\PostReviewController')->name('posts.revi
 
 // api responsible for reviews
 Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
+
+// api responsible for categories
+Route::get('categories/{category}', 'Api\ShowPostsFromCategory')->name('posts.incategory.show');

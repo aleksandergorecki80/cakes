@@ -4,18 +4,13 @@
             Data is loading...
         </div>
         <div v-else>
-            <div v-if="message">
-                {{ message }}
-            </div>
-            <div v-else>
-                <div class="row mb-4" v-for="row in rows" :key="'row' + row"> 
-                    <div class="col d-flex align-items-stretch" v-for="(post, column) in postsInRow(row)" :key="'row' + row + column">
-                        <PostListItem 
-                            v-bind="post"
-                        ></PostListItem> 
-                    </div>
-                    <div class="col" v-for="p in placeholderInRow(row)" :key="'placeholder' + row + p"></div>
+            <div class="row mb-4" v-for="row in rows" :key="'row' + row"> 
+                <div class="col d-flex align-items-stretch" v-for="(post, column) in postsInRow(row)" :key="'row' + row + column">
+                    <PostListItem 
+                        v-bind="post"
+                    ></PostListItem> 
                 </div>
+                <div class="col" v-for="p in placeholderInRow(row)" :key="'placeholder' + row + p"></div>
             </div>
         </div>
     </div>
@@ -32,8 +27,7 @@ export default {
             posts: null,
             loading: false,
             columns: 3,
-            id: null,
-            message: null
+            id: null
         }
     },
     computed: {
@@ -68,13 +62,9 @@ export default {
         // console.log(promise);
 
         const request = axios
-        .get(`/api/search?searched=${this.$route.params.phrase}`)
+        .get(`/api/categories/${this.$route.params.id}`)
         .then(response => {
             this.posts = response.data.data;
-            this.loading = false;
-            })
-        .catch((result)=>{
-            this.message = "Nie znalesiono."
             this.loading = false;
             });
         },

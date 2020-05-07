@@ -22,7 +22,7 @@ class ShowSearchedPosts extends Controller
         // Wyszukuje posty z wpisanego w pole wyszukiwania 
         
         $data = $request->validate([
-            'searched' => 'required|min:3|regex:/^[A-Za-z]+$/'
+            'searched' => 'required|min:3|regex:/^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/'
         ]);
         
         $searched = $request->input('searched');
