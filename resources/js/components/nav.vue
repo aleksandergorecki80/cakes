@@ -17,23 +17,20 @@
       </button>
 
       <Categories v-bind:categories="categories"></Categories>
-
-      <!-- <ul class="navbar-nav mr-auto" v-for="category in categories" :key="'category' + category.title">
-                <li class="nav-item">
-                        <router-link to="category.id"> {{ category.title   }}</router-link>
-                </li>
-      </ul>-->
     </nav>
+    <Carousel></Carousel>
   </div>
 </template>
 
 <script>
 import Search from "./Search";
 import Categories from "./Categories";
+import Carousel from "./Carousel";
 
 export default {
   components: {
-    Categories
+    Categories,
+    Carousel
   },
   data() {
     return {

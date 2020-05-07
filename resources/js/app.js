@@ -1,4 +1,7 @@
 require('./bootstrap');
+// require('./bootstrap-additions/bootstrap.bundle');
+// require('./bootstrap-additions/jquery');
+
 
 import VueRouter from 'vue-router';
 import router from './routes';
@@ -29,3 +32,8 @@ const app = new Vue({
     }
 });
 
+// if (jQuery) {
+//     alert("jquery is loaded");
+// } else {
+//     alert("Not loaded");
+// }
