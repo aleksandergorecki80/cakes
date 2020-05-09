@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="review-form">
        <success v-if="success"></success>
        <div v-else>
             <div class="form-group">
@@ -98,3 +98,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+    .review-form {
+        padding: 1.25em;
+    }
+</style>

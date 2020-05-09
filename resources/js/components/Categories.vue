@@ -1,22 +1,17 @@
 <template>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <router-link to="/">Home</router-link>
-      </li>
-    </ul>
     <ul
       class="navbar-nav mr-auto"
       v-for="category in categories"
       :key="'category' + category.title"
     >
       <li class="nav-item">
-          <router-link v-bind:to="{name: 'post-from-category', params:{id:category.id}}" >{{ category.title }}</router-link>
+          <router-link v-bind:to="{name: 'post-from-category', params:{id:category.id}}" class="text-uppercase">{{ category.title }}</router-link>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/contact">Kontakt</a>
+        <router-link to="/contact" class="text-uppercase">kontakt</router-link>
       </li>
     </ul>
     <Search></Search>
@@ -44,12 +39,15 @@ export default {
 };
 </script>
 <style scoped>
-    .btn {
-        background-color: #f8fafc;
-        border: none;
-    }
-    .btn:focus,.btn:active {
-        outline: none !important;
-         box-shadow: none;
-}
+  .btn {
+      background-color: #f8fafc;
+      border: none;
+  }
+  .btn:focus,.btn:active {
+      outline: none !important;
+        box-shadow: none;
+  }
+  .nav-item a{
+    color: #079100;
+  }
 </style>

@@ -30,6 +30,11 @@
             {{-- {{ Form::textarea('body', $post->body, ['id' => 'summary-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body text']) }} --}}
             {{ Form::textarea('body', $post->body, ['class'=>'form-control my-editor', 'id' => '']) }}
         </div>
+        <div class='form-group'>
+            {{ Form::label('ingredients', 'Ingredients') }}
+            {{-- {{ Form::textarea('body', $post->body, ['id' => 'summary-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body text']) }} --}}
+            {{ Form::textarea('ingredients', $post->ingredients, ['class'=>'form-control my-editor', 'id' => '']) }}
+        </div>
         <div class="form-group">
             {{ Form::file('cover_image') }}
         </div>

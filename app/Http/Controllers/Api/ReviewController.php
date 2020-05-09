@@ -20,7 +20,7 @@ class ReviewController extends Controller
     {
         $data = $request->validate([
             // 'id' => 'required|size:36|unique:reviews',
-            'content' => 'required|min:2',
+            'content' => 'required|min:2|regex:/^[a-zA-Z0-9,.!? ]*$/',
             'rating' => 'required|in:1,2,3,4,5',
             'post_id' => 'required'
         ]);

@@ -71,6 +71,7 @@ class PostsController extends Controller
             'title' => 'required',
             'summary' => 'required|max:191',
             'body' => 'required',
+            'ingredients' => 'ingredients',
             'cover_image' => 'image|nullable|max:1999'
         ]);
 
@@ -94,6 +95,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->summary = $request->input('summary');
         $post->body = $request->input('body');
+        $post->ingredients = $request->input('ingredients');
         $post->user_id = auth()->user()->id;
         $post->cover_image = $fileNameToStore;
         $post->category_id = $request->input('category_id');
@@ -157,6 +159,7 @@ class PostsController extends Controller
             'title' => 'required',
             'summary' => 'required|max:191',
             'body' => 'required',
+            'ingredients' => 'required',
             'cover_image' => 'image|nullable|max:1999'
         ]);
 
@@ -179,6 +182,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->summary = $request->input('summary');
         $post->body = $request->input('body');
+        $post->ingredients = $request->input('ingredients');
         $post->category_id = $request->input('category_id');
         $post->cover_image = $fileNameToStore;
         $post->save();

@@ -4,6 +4,7 @@ import Post from './post/SinglePost';
 import PostsFromCategory from'./posts/PostsFromCategory';
 import Searched from'./posts/Searched';
 import Review from './review/Review';
+import Contact from './components/Contact.vue';
 
 
 const routes = [
@@ -31,8 +32,12 @@ const routes = [
         path: "/categories/:id",
         component: PostsFromCategory,
         name: "post-from-category"
+    },
+    {
+        path: "/contact",
+        component: Contact,
+        name: "contact"
     }
-    
 ];
 
 const router = new VueRouter({

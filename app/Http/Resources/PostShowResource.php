@@ -17,7 +17,9 @@ class PostShowResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'body' =>  $this->summary,
+            'summary' => $this->summary,
+            'body' =>  $this->body,
+            'ingredients' =>  $this->ingredients,
             'cover_image' => $this->cover_image,
             'created_at'  => $this->created_at
         ];

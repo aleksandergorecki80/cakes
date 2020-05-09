@@ -18,7 +18,10 @@
 
       <Categories v-bind:categories="categories"></Categories>
     </nav>
-    <Carousel></Carousel>
+    <div v-if="showCarusel">
+      <Carousel v-bind:categories="categories"></Carousel>
+    </div>
+
   </div>
 </template>
 
@@ -39,6 +42,11 @@ export default {
       loading: false
     };
   },
+  computed: {
+    showCarusel(){
+      return this.$route.path == '/';
+    }
+  },
   // methods: {
   //     check(){
   //         // alert('I will search for it');
@@ -57,7 +65,10 @@ export default {
 </script>
 
 <style scoped>
-.search-button-img {
-  width: 10px;
+  .search-button-img {
+    width: 10px;
 }
+  .navbar-brand {
+    margin-right: 40px;
+  }
 </style>

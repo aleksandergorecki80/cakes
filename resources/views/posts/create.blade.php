@@ -29,6 +29,12 @@
             
         </div>
         <div class='form-group'>
+            {{ Form::label('ingredients', 'Ingredients') }}
+            {{-- {{ Form::textarea('body', '', ['id' => 'article-ckeditor', 'placeholder' => 'Body text']) }} --}}
+            {{ Form::textarea('ingredients', '', ['class'=>'form-control my-editor', 'id' => '', 'placeholder' => 'Ingredients text']) }}
+            
+        </div>
+        <div class='form-group'>
             {{ Form::file('cover_image') }}
         </div>
         {{ Form::submit('Submit', ['class'=>'btn btn-primary']) }}

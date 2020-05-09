@@ -17,7 +17,7 @@
         <i class="fas fa-search"></i>
       </button>
     </router-link>
-    <span>{{ message }}</span>
+    <span class="search-message">{{ message }}</span>
   </div>
 </template>
 
@@ -47,3 +47,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+  
+</style>
