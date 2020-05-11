@@ -5,6 +5,7 @@ import PostsFromCategory from'./posts/PostsFromCategory';
 import Searched from'./posts/Searched';
 import Review from './review/Review';
 import Contact from './components/Contact.vue';
+import Captcha from './components/Captcha.vue';
 
 
 const routes = [
@@ -35,7 +36,7 @@ const routes = [
     },
     {
         path: "/contact",
-        component: Contact,
+        component: Captcha,
         name: "contact"
     }
 ];

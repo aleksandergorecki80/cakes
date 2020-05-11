@@ -1899,6 +1899,121 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Captcha.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Captcha.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    'vue-recaptcha': vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    submit: function submit() {
+      // this.status = "submitting";
+      this.$refs.recaptcha.execute();
+    },
+    onCaptchaVerified: function onCaptchaVerified(recaptchaToken) {
+      console.log('onCaptchaVerified kki');
+      var self = this;
+      self.status = "submitting";
+      self.$refs.recaptcha.reset();
+      axios.post("/api/send-contact", {
+        email: self.email,
+        name: self.name,
+        content: self.content,
+        recaptchaToken: recaptchaToken
+      }).then(function (response) {
+        self.sucessfulServerResponse = response.data.message;
+      })["catch"](function (err) {
+        self.serverError = getErrorMessage(err); //helper to get a displayable message to the user
+
+        function getErrorMessage(err) {
+          var responseBody;
+          responseBody = err.response;
+
+          if (!responseBody) {
+            responseBody = err;
+          } else {
+            responseBody = err.response.data || responseBody;
+          }
+
+          return responseBody.message || JSON.stringify(responseBody);
+        }
+      }).then(function () {
+        self.status = "";
+      });
+    },
+    onCaptchaExpired: function onCaptchaExpired() {
+      this.$refs.recaptcha.reset();
+    }
+  },
+  data: function data() {
+    return {
+      email: "",
+      name: "",
+      content: "",
+      status: "",
+      sucessfulServerResponse: "",
+      serverError: ""
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Carousel.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Carousel.vue?vue&type=script&lang=js& ***!
@@ -2051,6 +2166,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _sheard_utility_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../sheard/utility/response */ "./resources/js/sheard/utility/response.js");
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
 //
 //
 //
@@ -2090,40 +2207,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
+      message: {
+        name: null,
+        recaptchaToken: null
+      },
       errors: [],
-      name: null,
-      age: null,
-      movie: null
+      chaptaKey: process.env.CAPTCHA_KEY
     };
   },
   methods: {
     checkForm: function checkForm(e) {
-      if (this.name && this.age) {
-        return true;
+      e.preventDefault();
+
+      if (this.message.name) {
+        // return true;
+        this.submit();
       }
 
       this.errors = [];
@@ -2131,15 +2237,33 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.name) {
         this.errors.push('Name required.');
       }
+    },
+    onCaptchaVerified: function onCaptchaVerified(recaptchaToken) {
+      var _this = this;
 
-      if (!this.age) {
-        this.errors.push('Age required.');
-      }
+      this.errors = [];
+      axios.post('/api/send-contact', {
+        recaptchaToken: recaptchaToken
+      }).then(function (response) {
+        _this.success = 201 == response.status;
+      })["catch"](function (err) {
+        if (Object(_sheard_utility_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(err)) {
+          var errors = err.response.data.errors;
 
-      e.preventDefault();
+          if (errors["content"] && 1 == _.size(errors)) {
+            _this.errors = errors;
+            return;
+          }
+        }
+      }).then(function () {
+        return _this.sending = false;
+      });
     }
+  },
+  created: function created() {//
   }
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -2837,6 +2961,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2853,7 +2978,11 @@ __webpack_require__.r(__webpack_exports__);
       success: false
     };
   },
-  created: function created() {},
+  created: function created() {
+    this.$nextTick(function () {
+      grecaptcha.render('recaptcha-main');
+    });
+  },
   methods: {
     // async submit(){
     //     this.errors = null;
@@ -56893,6 +57022,189 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Captcha.vue?vue&type=template&id=17badedf&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Captcha.vue?vue&type=template&id=17badedf& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "form",
+      {
+        staticClass: "auth-form",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submit($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "input-group" }, [
+          _c("label", { attrs: { for: "email" } }, [
+            _vm._v("email\n              ")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email"
+              }
+            ],
+            attrs: {
+              required: "",
+              placeholder: "name@domain.com",
+              name: "email",
+              id: "email"
+            },
+            domProps: { value: _vm.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group" }, [
+          _c("label", { attrs: { for: "name" } }, [
+            _vm._v("name\n              ")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
+              }
+            ],
+            attrs: {
+              required: "",
+              placeholder: "Name",
+              name: "name",
+              id: "email"
+            },
+            domProps: { value: _vm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.content,
+                expression: "content"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              name: "content",
+              id: "",
+              cols: "30",
+              rows: "10",
+              required: ""
+            },
+            domProps: { value: _vm.content },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.content = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "input-group" },
+          [
+            _c("vue-recaptcha", {
+              ref: "recaptcha",
+              attrs: {
+                size: "invisible",
+                sitekey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              },
+              on: {
+                verify: _vm.onCaptchaVerified,
+                expired: _vm.onCaptchaExpired
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button",
+                attrs: { disabled: _vm.status === "submitting", type: "submit" }
+              },
+              [_vm._v("sign up")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", {}, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.serverError,
+                  expression: "serverError"
+                }
+              ]
+            },
+            [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.serverError) +
+                  "\n              "
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Carousel.vue?vue&type=template&id=fe98726a&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Carousel.vue?vue&type=template&id=fe98726a&scoped=true& ***!
@@ -57179,10 +57491,7 @@ var render = function() {
   return _c("div", [
     _c(
       "form",
-      {
-        attrs: { id: "app", action: "https://vuejs.org/", method: "post" },
-        on: { submit: _vm.checkForm }
-      },
+      { attrs: { id: "app" }, on: { submit: _vm.checkForm } },
       [
         _vm.errors.length
           ? _c("p", [
@@ -57208,104 +57517,48 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.name,
-                expression: "name"
+                value: _vm.message.name,
+                expression: "message.name"
               }
             ],
-            attrs: { id: "name", type: "text", name: "name" },
-            domProps: { value: _vm.name },
+            attrs: { type: "text", name: "name" },
+            domProps: { value: _vm.message.name },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.name = $event.target.value
+                _vm.$set(_vm.message, "name", $event.target.value)
               }
             }
           })
         ]),
         _vm._v(" "),
+        _c("vue-recaptcha", {
+          attrs: {
+            sitekey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+            loadRecaptchaScript: true
+          },
+          on: { expired: _vm.onCaptchaExpired }
+        }),
+        _vm._v(" "),
         _c("p", [
-          _c("label", { attrs: { for: "age" } }, [_vm._v("Age")]),
-          _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.age,
-                expression: "age"
-              }
-            ],
-            attrs: { id: "age", type: "number", name: "age", min: "0" },
-            domProps: { value: _vm.age },
+            attrs: { type: "submit", value: "Submit" },
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.age = $event.target.value
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
               }
             }
           })
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("label", { attrs: { for: "movie" } }, [_vm._v("Favorite Movie")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.movie,
-                  expression: "movie"
-                }
-              ],
-              attrs: { id: "movie", name: "movie" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.movie = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", [_vm._v("Star Wars")]),
-              _vm._v(" "),
-              _c("option", [_vm._v("Vanilla Sky")]),
-              _vm._v(" "),
-              _c("option", [_vm._v("Atomic Blonde")])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
-      ]
+        ])
+      ],
+      1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("input", { attrs: { type: "submit", value: "Submit" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -58041,6 +58294,14 @@ var render = function() {
               2
             ),
             _vm._v(" "),
+            _c("div", {
+              staticClass: "g-recaptcha",
+              attrs: {
+                id: "recaptcha-main",
+                "data-sitekey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              }
+            }),
+            _vm._v(" "),
             _c(
               "button",
               {
@@ -58265,6 +58526,221 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+var defer = function defer() {
+  var state = false; // Resolved or not
+
+  var callbacks = [];
+
+  var resolve = function resolve(val) {
+    if (state) {
+      return;
+    }
+
+    state = true;
+
+    for (var i = 0, len = callbacks.length; i < len; i++) {
+      callbacks[i](val);
+    }
+  };
+
+  var then = function then(cb) {
+    if (!state) {
+      callbacks.push(cb);
+      return;
+    }
+
+    cb();
+  };
+
+  var deferred = {
+    resolved: function resolved() {
+      return state;
+    },
+    resolve: resolve,
+    promise: {
+      then: then
+    }
+  };
+  return deferred;
+};
+
+var ownProp = Object.prototype.hasOwnProperty;
+function createRecaptcha() {
+  var deferred = defer();
+  return {
+    notify: function notify() {
+      deferred.resolve();
+    },
+    wait: function wait() {
+      return deferred.promise;
+    },
+    render: function render(ele, options, cb) {
+      this.wait().then(function () {
+        cb(window.grecaptcha.render(ele, options));
+      });
+    },
+    reset: function reset(widgetId) {
+      if (typeof widgetId === 'undefined') {
+        return;
+      }
+
+      this.assertLoaded();
+      this.wait().then(function () {
+        return window.grecaptcha.reset(widgetId);
+      });
+    },
+    execute: function execute(widgetId) {
+      if (typeof widgetId === 'undefined') {
+        return;
+      }
+
+      this.assertLoaded();
+      this.wait().then(function () {
+        return window.grecaptcha.execute(widgetId);
+      });
+    },
+    checkRecaptchaLoad: function checkRecaptchaLoad() {
+      if (ownProp.call(window, 'grecaptcha') && ownProp.call(window.grecaptcha, 'render')) {
+        this.notify();
+      }
+    },
+    assertLoaded: function assertLoaded() {
+      if (!deferred.resolved()) {
+        throw new Error('ReCAPTCHA has not been loaded');
+      }
+    }
+  };
+}
+var recaptcha = createRecaptcha();
+
+if (typeof window !== 'undefined') {
+  window.vueRecaptchaApiLoaded = recaptcha.notify;
+}
+
+var VueRecaptcha = {
+  name: 'VueRecaptcha',
+  props: {
+    sitekey: {
+      type: String,
+      required: true
+    },
+    theme: {
+      type: String
+    },
+    badge: {
+      type: String
+    },
+    type: {
+      type: String
+    },
+    size: {
+      type: String
+    },
+    tabindex: {
+      type: String
+    },
+    loadRecaptchaScript: {
+      type: Boolean,
+      "default": false
+    },
+    recaptchaScriptId: {
+      type: String,
+      "default": '__RECAPTCHA_SCRIPT'
+    },
+    recaptchaHost: {
+      type: String,
+      "default": 'www.google.com'
+    },
+    language: {
+      type: String,
+      "default": ''
+    }
+  },
+  beforeMount: function beforeMount() {
+    if (this.loadRecaptchaScript) {
+      if (!document.getElementById(this.recaptchaScriptId)) {
+        // Note: vueRecaptchaApiLoaded load callback name is per the latest documentation
+        var script = document.createElement('script');
+        script.id = this.recaptchaScriptId;
+        script.src = "https://" + this.recaptchaHost + "/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit&hl=" + this.language;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    recaptcha.checkRecaptchaLoad();
+
+    var opts = _extends({}, this.$props, {
+      callback: this.emitVerify,
+      'expired-callback': this.emitExpired,
+      'error-callback': this.emitError
+    });
+
+    var container = this.$slots["default"] ? this.$el.children[0] : this.$el;
+    recaptcha.render(container, opts, function (id) {
+      _this.$widgetId = id;
+
+      _this.$emit('render', id);
+    });
+  },
+  methods: {
+    reset: function reset() {
+      recaptcha.reset(this.$widgetId);
+    },
+    execute: function execute() {
+      recaptcha.execute(this.$widgetId);
+    },
+    emitVerify: function emitVerify(response) {
+      this.$emit('verify', response);
+    },
+    emitExpired: function emitExpired() {
+      this.$emit('expired');
+    },
+    emitError: function emitError() {
+      this.$emit('error');
+    }
+  },
+  render: function render(h) {
+    return h('div', {}, this.$slots["default"]);
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (VueRecaptcha);
 
 
 /***/ }),
@@ -74450,6 +74926,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/Captcha.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Captcha.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Captcha.vue?vue&type=template&id=17badedf& */ "./resources/js/components/Captcha.vue?vue&type=template&id=17badedf&");
+/* harmony import */ var _Captcha_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Captcha.vue?vue&type=script&lang=js& */ "./resources/js/components/Captcha.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Captcha_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Captcha.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Captcha.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Captcha.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Captcha_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Captcha.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Captcha.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Captcha_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Captcha.vue?vue&type=template&id=17badedf&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Captcha.vue?vue&type=template&id=17badedf& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Captcha.vue?vue&type=template&id=17badedf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Captcha.vue?vue&type=template&id=17badedf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Captcha_vue_vue_type_template_id_17badedf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Carousel.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/Carousel.vue ***!
@@ -75561,6 +76106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _posts_Searched__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./posts/Searched */ "./resources/js/posts/Searched.vue");
 /* harmony import */ var _review_Review__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./review/Review */ "./resources/js/review/Review.vue");
 /* harmony import */ var _components_Contact_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Contact.vue */ "./resources/js/components/Contact.vue");
+/* harmony import */ var _components_Captcha_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Captcha.vue */ "./resources/js/components/Captcha.vue");
+
 
 
 
@@ -75590,7 +76137,7 @@ var routes = [{
   name: "post-from-category"
 }, {
   path: "/contact",
-  component: _components_Contact_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _components_Captcha_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: "contact"
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({

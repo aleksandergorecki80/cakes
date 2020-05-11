@@ -24,6 +24,7 @@
                     {{ error }}                
                 </div>
             </div>
+            <div id="recaptcha-main" class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
             <button class="btn lg btn-success btn-block" 
             @click.prevent ="submit" v-bind:disabled="sending">Submit</button>
        </div>
@@ -33,6 +34,7 @@
 <script>
 import { is422 } from "./../sheard/utility/response";
 import validationErrors from "./../sheard/mixins/validationErrors";
+
 
 export default {
     mixins: [validationErrors],
@@ -49,7 +51,9 @@ export default {
         };
     },
     created(){
-        
+        this.$nextTick(function () {
+    grecaptcha.render('recaptcha-main');
+})
 
     },
     methods: {

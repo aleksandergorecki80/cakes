@@ -3,8 +3,6 @@
 <form
   id="app"
   @submit="checkForm"
-  action="https://vuejs.org/"
-  method="post"
 >
 
   <p v-if="errors.length">
@@ -17,39 +15,20 @@
   <p>
     <label for="name">Name</label>
     <input
-      id="name"
-      v-model="name"
+      v-model="message.name"
       type="text"
       name="name"
     >
   </p>
 
-  <p>
-    <label for="age">Age</label>
-    <input
-      id="age"
-      v-model="age"
-      type="number"
-      name="age"
-      min="0"
-    >
-  </p>
-
-  <p>
-    <label for="movie">Favorite Movie</label>
-    <select
-      id="movie"
-      v-model="movie"
-      name="movie"
-    >
-      <option>Star Wars</option>
-      <option>Vanilla Sky</option>
-      <option>Atomic Blonde</option>
-    </select>
-  </p>
-
+  <vue-recaptcha 
+    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" 
+    @expired="onCaptchaExpired"
+    :loadRecaptchaScript="true">
+  </vue-recaptcha>
   <p>
     <input
+      @click.prevent ="submit"
       type="submit"
       value="Submit"
     >
@@ -59,20 +38,26 @@
     </div>
 </template>
 <script>
+import { is422 } from "./../sheard/utility/response";
+import VueRecaptcha from 'vue-recaptcha';
 export default {
-
+  components: { VueRecaptcha },
   data(){
     return{
+      message: {
+        name: null,
+        recaptchaToken: null
+      },
       errors: [],
-      name: null,
-      age: null,
-      movie: null
+      chaptaKey: process.env.CAPTCHA_KEY
     }
   },
   methods:{
     checkForm: function (e) {
-      if (this.name && this.age) {
-        return true;
+      e.preventDefault();
+      if (this.message.name) {
+        // return true;
+        this.submit();
       }
 
       this.errors = [];
@@ -80,13 +65,33 @@ export default {
       if (!this.name) {
         this.errors.push('Name required.');
       }
-      if (!this.age) {
-        this.errors.push('Age required.');
-      }
+     
+    },
+    onCaptchaVerified: function (recaptchaToken) {
+            this.errors = [];
 
-      e.preventDefault();
+            axios.post('/api/send-contact', {
+              recaptchaToken: recaptchaToken
+            })
+            .then(response => {
+                this.success = 201 == response.status;
+            })
+            .catch((err)=>{
+                if(is422(err)){
+                    const errors = err.response.data.errors;
+                     if (errors["content"] && 1 == _.size(errors)) {
+                        this.errors = errors;
+                        return;
+                    }
+                } 
+            })
+            .then(()=>(this.sending = false));
     }
-  }
+  },
+
+  created() {
+    //
+}
 }
 
 </script>

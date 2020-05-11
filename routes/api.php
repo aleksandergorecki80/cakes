@@ -37,3 +37,6 @@ Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
 
 // api responsible for categories
 Route::get('categories/{category}', 'Api\ShowPostsFromCategory')->name('posts.incategory.show');
+
+//sending contact form
+Route::post('send-contact', 'Api\SendContactForm')->name('contact.form.send');

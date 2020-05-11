@@ -15,6 +15,9 @@
         <!-- SCRIPT -->
         <script src="{{ asset('js/app.js') }}" defer></script>
 
+        <!-- vue-recaptcha -->
+        <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script> 
+
     </head>
     <body>
         <div id="app">
