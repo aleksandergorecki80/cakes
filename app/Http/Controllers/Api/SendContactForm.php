@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use GuzzleHttp\Client;
+
 class SendContactForm extends Controller
 {
     /**
@@ -27,41 +29,41 @@ class SendContactForm extends Controller
             'title' => 'Wiadomość z bloga.',
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'content' => $request->input('body')
+            'content' => $request->input('content')
         ];
 
         $token = $request->recaptchaToken;
 
-if($token){
-    return $details;
-    } else {
-    return 'no token';
-}
-
-        // if($token){
+        if($token){
         
-        //     $client = new Client([
-        //         'base_uri' => 'https://google.com/recaptcha/api/',
-        //         'timeout' => 2.0
-        //         ]);
+            $client = new Client([
+                'base_uri' => 'https://google.com/recaptcha/api/',
+                'timeout' => 2.0
+                ]);
     
-        //     $response = $client->request('POST', 'siteverify', [
-        //         'query' => [
-        //         'secret' => env('CAPTCHA_SECRET'),
-        //         'response' => $token]]);
+            $response = $client->request('POST', 'siteverify', [
+                'query' => [
+                'secret' => env('CAPTCHA_SECRET'),
+                'response' => $token]]);
     
-        //     $results = json_decode($response->getBody()->getContents());
+            $results = json_decode($response->getBody()->getContents());
 
-        //     if($results->success){
-        //         \Mail::to('a.gorecki1980@gmail.com')->send(new \App\Mail\SendMail($details));
-        //         return redirect('/posts')->with('success', 'Wiadomość wysłana');
-        //     } else {
-        //         return redirect('/contact')->with('error', 'Spróbuj ponownie');
-        //     }
+            if($results->success){
+                \Mail::to('a.gorecki1980@gmail.com')->send(new \App\Mail\SendMail($details));
 
-        // } else {
-        //     // dd($token);
-        //     return redirect('/contact');
-        // }
+                return response()
+                ->json(['message' => 'Success'], 200);
+
+
+
+            } else {
+                return ($token);
+                return redirect('/contact')->with('error', 'Spróbuj ponownie');
+            }
+
+        } else {
+            dd($token);
+            return redirect('/contact');
+        }
     }
 }

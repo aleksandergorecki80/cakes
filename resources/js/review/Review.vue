@@ -1,6 +1,6 @@
 <template>
     <div class="review-form">
-       <success v-if="success"></success>
+       <success v-if="success" v-bind:information="information"></success>
        <div v-else>
             <div class="form-group">
                 <label for="" class="text-muted">
@@ -45,9 +45,10 @@ export default {
                 content: null,
                 post_id: this.$route.params.id
             },
-            error: false,
+            errors: null,
             sending: false,
-            success: false
+            success: false,
+            information: 'Your review has been posted.'
         };
     },
     created(){

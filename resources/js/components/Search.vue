@@ -37,7 +37,7 @@ export default {
               this.message = 'Fill in a field.'
           } else {
                 this.message = '';
-                this.$router.push({ name: 'search', params: { phrase:this.search }})
+                this.$router.push({ name: 'search', params: { phrase:this.search }});
           }
 
       },

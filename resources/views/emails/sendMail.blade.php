@@ -7,6 +7,6 @@
     <h1>{{ $details['title'] }}</h1>
     <h3>{{ $details['name'] }}</h3>
     <h5>{{ $details['email'] }}</h5>
-    <p>{{ $details['body'] }}</p>
+    <p>{{ $details['content'] }}</p>co
 </body>
 </html>
