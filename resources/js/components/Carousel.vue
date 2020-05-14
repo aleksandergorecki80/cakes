@@ -16,7 +16,7 @@
           <router-link to="/categories/2">
             <div class="description">
               <h3>Torty</h3>
-              <p>Kolorowe torty na każdą okazję</p>
+              <p class="category-description">Kolorowe torty na każdą okazję</p>
             </div>
           </router-link>
         </div>
@@ -29,7 +29,7 @@
           <router-link to="categories/1">
             <div class="description">
               <h3>Ciasta</h3>
-              <p>Pyszne ciasta na codzień i od święta</p>
+              <p class="category-description">Pyszne ciasta na codzień i od święta</p>
             </div>
           </router-link>
         </div>
@@ -42,7 +42,7 @@
           <router-link to="categories/3">
             <div class="description">
               <h3>Babeczki i ciastka</h3>
-              <p>W sam raz do kawy i na przekąskę</p>
+              <p class="category-description">W sam raz do kawy i na przekąskę</p>
             </div>
           </router-link>
         </div>
@@ -73,25 +73,45 @@ export default {
   props: {
     categories: Array
   },
-computed: {
+  computed: {
     title() {
       return this.categories[0].title;
-  },
-  // etc...
-}
+    }
+    // etc...
+  }
 };
 </script>
 <style scoped>
-  .carousel{
-    margin-bottom: 20px;
+.carousel {
+  margin-bottom: 20px;
+}
+.description {
+  color: white;
+  position: absolute;
+  top: 80%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px 50px 10px 20px;
+}
+
+@media (max-width: 767px) {
+  .description {
+    top: 60%;
+    left: 0;
+    padding: 20px 50px 10px 20px;
+    width: 100%;
+    height: 40%;
+    transform: none;
   }
-   .description {
-        color: white;
-        position: absolute;
-        top: 80%;
-        left: 20%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.4);
-        padding: 20px 50px 10px 20px;
-    }
+  .carousel-indicators{
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .category-description {
+    display: none;
+  }
+}
 </style>

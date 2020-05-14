@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
       <a class="navbar-brand" href="/">
-        <img src="/storage/layout_images/logo_BC.png" alt="Logo" />
+        <img src="/storage/layout_images/logo_BC.png" alt="Logo" class="companyLogo"/>
       </a>
       <button
         class="navbar-toggler"
@@ -70,5 +70,15 @@ export default {
 }
   .navbar-brand {
     margin-right: 40px;
+  }
+  .companyLogo {
+    width: 100%;
+  }
+
+  @media(max-width: 540px){
+    .navbar-brand {
+      width: 70%;
+      margin-right: 0px;
+    }
   }
 </style>

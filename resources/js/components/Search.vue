@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search d-flex justify-content-sm-end">
     <input
       class="search-input"
       type="search"
@@ -48,5 +48,7 @@ export default {
 };
 </script>
 <style scoped>
-  
+  input{
+    width: 100%;
+  }
 </style>

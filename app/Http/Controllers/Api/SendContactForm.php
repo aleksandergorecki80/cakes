@@ -57,7 +57,7 @@ class SendContactForm extends Controller
 
 
             } else {
-                return ($token);
+                
                 return redirect('/contact')->with('error', 'Spróbuj ponownie');
             }
 

@@ -17001,6 +17001,8 @@ a.text-dark:focus {
 }
 
 .card .image-container img {
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 100%;
   height: 100%;
   transition: all 0.3s;

@@ -1,97 +1,165 @@
 <template>
-    <div>
-<form
-  id="app"
-  @submit="checkForm"
->
+  <div>
+    <success v-if="sucessfulServerResponse" v-bind:information="information"></success>
+    <div v-else>
+      <form class="auth-form" @submit.prevent="submit">
+        <div class="input-group">
+          <label for="name">Name</label>
 
-  <p v-if="errors.length">
-    <b>Please correct the following error(s):</b>
-    <ul>
-      <li v-for="error in errors" :key="'err' + error">{{ error }}</li>
-    </ul>
-  </p>
+          <input
+            type="text"
+            class="form-control"
+            v-model="contactMessage.name"
+            placeholder="Name"
+            name="name"
+            id="email"
+            v-bind:class="[{'is-invalid' : errorFor('name')}]"
+          />
 
-  <p>
-    <label for="name">Name</label>
-    <input
-      v-model="message.name"
-      type="text"
-      name="name"
-    >
-  </p>
+          <p
+            class="invalid-feedback"
+            v-for="(error, index) in errorFor('name')"
+            :key="'name' + index"
+          >{{ error }}</p>
+        </div>
 
-  <vue-recaptcha 
-    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" 
-    @expired="onCaptchaExpired"
-    :loadRecaptchaScript="true">
-  </vue-recaptcha>
-  <p>
-    <input
-      @click.prevent ="submit"
-      type="submit"
-      value="Submit"
-    >
-  </p>
+        <div class="input-group">
+          <label for="email">email</label>
+          <input
+            name="email"
+            id="email"
+            type="text"
+            class="form-control"
+            v-model="contactMessage.email"
+            placeholder="name@domain.com"
+            v-bind:class="[{'is-invalid' : errorFor('email')}]"
+          />
 
-</form>
+          <p
+            class="invalid-feedback"
+            v-for="(error, index) in errorFor('email')"
+            :key="'name' + index"
+          >{{ error }}</p>
+        </div>
+
+        <div class="input-group">
+          <label for="content">Treść</label>
+          <textarea
+            name="content"
+            id
+            cols="30"
+            rows="10"
+            class="form-control"
+            v-model="contactMessage.content"
+            v-bind:class="[{'is-invalid' : errorFor('content')}]"
+          ></textarea>
+
+          <p
+            class="invalid-feedback"
+            v-for="(error, index) in errorFor('content')"
+            :key="'content' + index"
+          >{{ error }}</p>
+        </div>
+
+        <div class="input-group">
+          <vue-recaptcha
+            ref="recaptcha"
+            @verify="onCaptchaVerified"
+            @expired="onCaptchaExpired"
+            size="invisible"
+            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+          ></vue-recaptcha>
+          <button
+            class="btn lg btn-success btn-block"
+            @click.prevent="submit"
+            v-bind:disabled="sending"
+          >Submit</button>
+        </div>
+      </form>
     </div>
+  </div>
 </template>
+
 <script>
+import VueRecaptcha from "vue-recaptcha";
+import validationErrors from "./../sheard/mixins/validationErrors";
 import { is422 } from "./../sheard/utility/response";
-import VueRecaptcha from 'vue-recaptcha';
+
 export default {
-  components: { VueRecaptcha },
-  data(){
-    return{
-      message: {
-        name: null,
-        recaptchaToken: null
+  mixins: [validationErrors],
+  components: {
+    "vue-recaptcha": VueRecaptcha
+  },
+  data() {
+    return {
+      contactMessage: {
+        email: "",
+        name: "",
+        content: ""
       },
-      errors: [],
-      chaptaKey: process.env.CAPTCHA_KEY
-    }
+      sending: null,
+      sucessfulServerResponse: "",
+      information: "Your message has been sent.",
+      errors: null
+    };
   },
-  methods:{
-    checkForm: function (e) {
-      e.preventDefault();
-      if (this.message.name) {
-        // return true;
-        this.submit();
-      }
-
-      this.errors = [];
-
-      if (!this.name) {
-        this.errors.push('Name required.');
-      }
-     
+  methods: {
+    submit() {
+      // this.status = "submitting";
+      this.$refs.recaptcha.execute();
     },
-    onCaptchaVerified: function (recaptchaToken) {
-            this.errors = [];
+    onCaptchaVerified(recaptchaToken) {
+      this.errors = null;
+      this.sending = true;
+      this.success = false;
 
-            axios.post('/api/send-contact', {
-              recaptchaToken: recaptchaToken
-            })
-            .then(response => {
-                this.success = 201 == response.status;
-            })
-            .catch((err)=>{
-                if(is422(err)){
-                    const errors = err.response.data.errors;
-                     if (errors["content"] && 1 == _.size(errors)) {
-                        this.errors = errors;
-                        return;
-                    }
-                } 
-            })
-            .then(()=>(this.sending = false));
+      // const self = this;
+      this.status = "submitting";
+      this.$refs.recaptcha.reset();
+      axios
+        .post("/api/send-contact", {
+          email: this.contactMessage.email,
+          name: this.contactMessage.name,
+          content: this.contactMessage.content,
+          recaptchaToken: recaptchaToken
+        })
+        .then(response => {
+          this.sucessfulServerResponse = response.data.message;
+        })
+        .catch(err => {
+          console.log(err);
+          this.errors = err.response.data.errors;
+        })
+        .then(() => (this.sending = false));
+      //     .catch(err => {
+      //       this.serverError = getErrorMessage(err);
+
+      //       //helper to get a displayable message to the user
+      //       function getErrorMessage(err) {
+      //         let responseBody;
+      //         responseBody = err.response;
+      //         if (!responseBody) {
+      //           responseBody = err;
+      //         } else {
+      //           responseBody = err.response.data || responseBody;
+      //         }
+      //         return responseBody.message || JSON.stringify(responseBody);
+      //       }
+      //     })
+      //     .then(() => {
+      //       this.status = "";
+      //     });
+      // },
+    },
+    onCaptchaExpired() {
+      this.$refs.recaptcha.reset();
     }
-  },
-
-  created() {
-    //
-}
-}
-
+  }
+};
 </script>
+<style  scoped>
+.input-group {
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+</style>
