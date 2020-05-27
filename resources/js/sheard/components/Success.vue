@@ -7,14 +7,14 @@
 <script>
 export default {
   props: {
-    information: String
+    information: String,
+    postId: Number
   },
   created() {
-    console.log(this.$route.path);
     setTimeout(() => {
       this.$route.path === "/contact"
         ? this.$router.push({ name: "home", params: "" })
-        : this.$router.go();
+        : this.$router.push({ name: "post", params: { id: this.postId } });
     }, 2000);
   }
 };
@@ -23,9 +23,5 @@ export default {
 .success {
   color: green;
   font-size: 10rem;
-  /* display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column; */
 }
 </style>

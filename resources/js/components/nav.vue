@@ -47,13 +47,6 @@ export default {
       return this.$route.path == '/';
     }
   },
-  // methods: {
-  //     check(){
-  //         // alert('I will search for it');
-  //                 // console.log(this.$store);
-  //         this.$store.commit('setLastSearch', {searchName: this.search});
-  //     }
-  // },
   created() {
     this.loading = true;
     const request = axios.get("/api/loadmenu").then(response => {

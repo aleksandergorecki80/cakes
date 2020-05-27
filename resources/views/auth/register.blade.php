@@ -66,7 +66,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
-                                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                                <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_KEY') }}"></div>
                             </div>
                         </div>
 

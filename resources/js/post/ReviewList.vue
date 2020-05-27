@@ -1,5 +1,5 @@
 <template>
-    <div class="d-none d-md-block review-section">
+    <div class="d-md-block review-section">
         <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">Review list</h6>
         <hr />
         <div v-if="loading">
@@ -24,8 +24,6 @@
     </div>
 </template>
 <script>
-// import moment from "moment";
-
 export default {
     props: {
         postId: String
@@ -44,13 +42,6 @@ export default {
                         
 
     },
-
-    
-    // filters: {
-    //     fromNow(value){
-    //         return moment(value).fromNow();
-    //     }
-    // }
 }
 </script>
 <style scoped>

@@ -62,9 +62,6 @@ export default {
         this.windowWidth = document.documentElement.clientWidth;
       },
   },
-//   beforeCreate() {
-//     console.log("beforeCreate");
-//   },
   created() {
     this.loading = true;
 

@@ -6,7 +6,10 @@
       :key="'category' + category.title"
     >
       <li class="nav-item">
-          <router-link v-bind:to="{name: 'post-from-category', params:{id:category.id}}" class="text-uppercase">{{ category.title }}</router-link>
+        <router-link
+          v-bind:to="{name: 'post-from-category', params:{id:category.id}}"
+          class="text-uppercase"
+        >{{ category.title }}</router-link>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto align-items-sm-end align-items-end">
@@ -26,28 +29,20 @@ export default {
   },
   props: {
     categories: Array
-  },
-  methods: {
-    //   getPostsFromOneCategory(id){
-    //      const request = axios
-    //      .get(`/api/categories/${id}`)
-    //      .then(response =>{
-    //         this.$store.commit('setPosts', response.data.data)
-    //      });
-    //   },
   }
 };
 </script>
 <style scoped>
-  .btn {
-      background-color: #f8fafc;
-      border: none;
-  }
-  .btn:focus,.btn:active {
-      outline: none !important;
-        box-shadow: none;
-  }
-  .nav-item a{
-    color: #079100;
-  }
+.btn {
+  background-color: #f8fafc;
+  border: none;
+}
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+.nav-item a {
+  color: #079100;
+}
 </style>

@@ -12,7 +12,7 @@
             v-model="contactMessage.name"
             placeholder="Name"
             name="name"
-            id="email"
+            id="name"
             v-bind:class="[{'is-invalid' : errorFor('name')}]"
           />
 
@@ -46,7 +46,7 @@
           <label for="content">Treść</label>
           <textarea
             name="content"
-            id
+            id = "content"
             cols="30"
             rows="10"
             class="form-control"
@@ -67,7 +67,7 @@
             @verify="onCaptchaVerified"
             @expired="onCaptchaExpired"
             size="invisible"
-            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            v-bind:sitekey="sitekey"
           ></vue-recaptcha>
           <button
             class="btn lg btn-success btn-block"
@@ -97,6 +97,8 @@ export default {
         name: "",
         content: ""
       },
+      // sitekey: "6Lf36_UUAAAAAPMgukyH86oxa4i-xSA8QOOVy2F5",  // prod
+      sitekey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",  // devv
       sending: null,
       sucessfulServerResponse: "",
       information: "Your message has been sent.",
@@ -105,7 +107,6 @@ export default {
   },
   methods: {
     submit() {
-      // this.status = "submitting";
       this.$refs.recaptcha.execute();
     },
     onCaptchaVerified(recaptchaToken) {
@@ -113,9 +114,8 @@ export default {
       this.sending = true;
       this.success = false;
 
-      // const self = this;
-      this.status = "submitting";
       this.$refs.recaptcha.reset();
+
       axios
         .post("/api/send-contact", {
           email: this.contactMessage.email,
@@ -127,29 +127,9 @@ export default {
           this.sucessfulServerResponse = response.data.message;
         })
         .catch(err => {
-          console.log(err);
           this.errors = err.response.data.errors;
         })
         .then(() => (this.sending = false));
-      //     .catch(err => {
-      //       this.serverError = getErrorMessage(err);
-
-      //       //helper to get a displayable message to the user
-      //       function getErrorMessage(err) {
-      //         let responseBody;
-      //         responseBody = err.response;
-      //         if (!responseBody) {
-      //           responseBody = err;
-      //         } else {
-      //           responseBody = err.response.data || responseBody;
-      //         }
-      //         return responseBody.message || JSON.stringify(responseBody);
-      //       }
-      //     })
-      //     .then(() => {
-      //       this.status = "";
-      //     });
-      // },
     },
     onCaptchaExpired() {
       this.$refs.recaptcha.reset();

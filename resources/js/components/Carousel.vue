@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide d-none d-md-block" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -77,7 +77,6 @@ export default {
     title() {
       return this.categories[0].title;
     }
-    // etc...
   }
 };
 </script>

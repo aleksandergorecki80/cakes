@@ -38,3 +38,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .fas, .far {
+        color:  #38c172;
+    }
+</style>

@@ -35,7 +35,7 @@ class SendContactForm extends Controller
         $token = $request->recaptchaToken;
 
         if($token){
-        
+            
             $client = new Client([
                 'base_uri' => 'https://google.com/recaptcha/api/',
                 'timeout' => 2.0
@@ -43,12 +43,17 @@ class SendContactForm extends Controller
     
             $response = $client->request('POST', 'siteverify', [
                 'query' => [
-                'secret' => env('CAPTCHA_SECRET'),
+                // 'secret' => env('CAPTCHA_SECRET'),
+                'secret' => '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
                 'response' => $token]]);
     
-            $results = json_decode($response->getBody()->getContents());
+                
 
+            $results = json_decode($response->getBody()->getContents());
+            
             if($results->success){
+               
+
                 \Mail::to('a.gorecki1980@gmail.com')->send(new \App\Mail\SendMail($details));
 
                 return response()

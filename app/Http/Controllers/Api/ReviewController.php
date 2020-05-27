@@ -29,18 +29,17 @@ class ReviewController extends Controller
             'post_id' => 'required'
         ]);
 
-
-        // $token = $request->recaptchaToken;
-        // return $data;
-
         $token = $request->recaptchaToken;
 
         if ($token) {
 
+            
             $client = new Client([
                 'base_uri' => 'https://google.com/recaptcha/api/',
                 'timeout' => 2.0
             ]);
+
+                
 
             $response = $client->request('POST', 'siteverify', [
                 'query' => [
@@ -49,21 +48,22 @@ class ReviewController extends Controller
                 ]
             ]);
 
+            
             $results = json_decode($response->getBody()->getContents());
 
             if ($results->success) {
+
                 $data['id'] = Str::uuid();
                 $review = Review::make($data);
                 $review->save();
 
-                // return $review;
                 return new PostReviewIndexResource($review);
             } else {
 
                 // return redirect('/contact')->with('error', 'Spróbuj ponownie');
             }
         } else {
-            
+
             // return redirect('/contact');
         }
     }

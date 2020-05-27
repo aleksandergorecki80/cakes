@@ -1,6 +1,6 @@
 <template>
   <div class="review-form">
-    <success v-if="success" v-bind:information="information"></success>
+    <success v-if="success" v-bind:information="information" v-bind:post-id="this.$route.params.id"></success>
     <div v-else>
       <div class="form-group">
         <label for class="text-muted">Select the star rating</label>
@@ -29,7 +29,7 @@
         @verify="onCaptchaVerified"
         @expired="onCaptchaExpired"
         size="invisible"
-        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            v-bind:sitekey="sitekey"
       ></vue-recaptcha>
       <button
         class="btn lg btn-success btn-block"
@@ -38,6 +38,7 @@
       >Submit</button>
     </div>
   </div>
+  
 </template>
 <script>
 import VueRecaptcha from "vue-recaptcha";
@@ -56,60 +57,21 @@ export default {
         content: null,
         post_id: this.$route.params.id
       },
+      sitekey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
       errors: null,
       sending: false,
       success: false,
       information: "Your review has been posted."
     };
   },
-  created() {
-    //
-  },
-
-  // computed: {
-  //     contentControl: {
-  //         get(){
-  //             //this function will determine what is displayed in the input
-  //             // return this.value*2;
-  //         },
-  //         set(newVal){
-  //             //this function will run whenever the input changes
-  //             this.value = newVal/2;
-  //         }
-  //     }
-  // },
-
   methods: {
     removeInvalid() {
       if (this.review.content.length > 2) {
         this.errors = null;
       }
-
-      // this.review.content = event.value;
     },
 
-    // async submit(){
-    //     this.errors = null;
-    //     this.sending = true;
-
-    //     try{
-    //         const result = await (axios.post('/api/reviews', this.review));
-    //     } catch (err) {
-    //         if(is422(err)){
-    //             const errors = err.response.data.errors;
-    //              if (errors["content"] && 1 == _.size(errors)) {
-    //                 this.errors = errors;
-    //                 return;
-    //             }
-    //         }
-    //     }
-    //     this.sending = false;
-    //     console.log('jestem tu');
-    // }
-
-    //  TO TEŻ DZIAŁA !!!
-    submit() {
-      // this.status = "submitting";
+     submit() {
       this.$refs.recaptcha.execute();
     },
     onCaptchaVerified(recaptchaToken) {
@@ -149,4 +111,5 @@ export default {
 .review-form {
   padding: 1.25em;
 }
+
 </style>

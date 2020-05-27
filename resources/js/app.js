@@ -12,7 +12,7 @@ import myFooter from './components/my-footer';
 import StarRating from "./sheard/components/StarRating";
 import Success from "./sheard/components/Success";
 
-import { store } from './store';
+// import { store } from './store';
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
@@ -24,7 +24,6 @@ Vue.component("success", Success);
 const app = new Vue({
     el: '#app',
     router: router,
-    store,
     components: {
         "index": Index,
         "my-footer": myFooter,

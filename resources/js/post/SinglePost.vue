@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-if="loading">Data is loading...</div>
-    <div v-else class="row">
-      <div class="col-md-8 pb-4">
+    <div v-else class="row flex-lg-row flex-md-row">
+      <div class="col-md-8 pb-4 col-sm-1">
         <div class="card">
           <div class="card-body">
             <div>
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 pb-4">
+      <div class="col-md-4 pb-4 col-sm-1">
         <div class="card">
           <div class="card-body">
             <h4>składniki</h4>
@@ -24,22 +24,22 @@
           </div>
         </div>
       </div>
-    </div>
+    
     <div class="row">
-        <div class="col-md-8 pb-4">
+        <div class="col-md-8 pb-4 col-sm-1">
             <ReviewList v-bind:post-id="this.$route.params.id | turnIntoString"></ReviewList>
-            <Review></Review>
+            <router-link v-bind:to="{name: 'review', params:{id:post.id}}" class="btn btn-success btn-block text-uppercase">Skomentuj</router-link>
         </div>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import ReviewList from "./ReviewList";
-import Review from "./../review/Review";
+
 export default {
   components: {
-    Review,
     ReviewList
   },
   data() {
@@ -50,7 +50,6 @@ export default {
   },
   created() {
     this.loading = true;
-    console.log(this.$route.params.id);
     const request = axios
       .get(`/api/posts/${this.$route.params.id}`)
       .then(response => {
@@ -86,9 +85,6 @@ img {
 }
 p {
   padding: 20px;
-}
-.review-container {
-  width: 70%;
 }
 hr {
     padding: 0;
